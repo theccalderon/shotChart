@@ -18,7 +18,7 @@ class BBSpider(scrapy.Spider):
         #     url = url + 'tag/' + tag
 
         urls = []
-        with open('../../../calendar.json') as json_file:
+        with open('./calendar.json') as json_file:
             data = json.load(json_file)
             for p in data['seasons']:
                 print(p)
