@@ -1,0 +1,224 @@
+{
+  "seasons": [
+    {
+      "year": 2000,
+      "regular_start_month":10,
+      "regular_start_day": 31,
+      "regular_end_month": 4,
+      "regular_end_day": 18,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 21,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 15
+    },
+    {
+      "year": 2001,
+      "regular_start_month":10,
+      "regular_start_day": 3,
+      "regular_end_month": 4,
+      "regular_end_day": 17,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 2,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 2
+    },
+    {
+      "year": 2002,
+      "regular_start_month":10,
+      "regular_start_day": 29,
+      "regular_end_month": 4,
+      "regular_end_day": 16,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 19,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 15
+    },
+    {
+      "year": 2003,
+      "regular_start_month":10,
+      "regular_start_day": 28,
+      "regular_end_month": 4,
+      "regular_end_day": 14,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 17,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 15
+    },
+    {
+      "year": 2004,
+      "regular_start_month": 11,
+      "regular_start_day": 2,
+      "regular_end_month": 4,
+      "regular_end_day": 19,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 22,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 20
+    },
+    {
+      "year": 2005,
+      "regular_start_month": 11,
+      "regular_start_day": 2,
+      "regular_end_month": 4,
+      "regular_end_day": 19,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 22,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 20
+    },
+    {
+      "year": 2006,
+      "regular_start_month":10,
+      "regular_start_day": 31,
+      "regular_end_month": 4,
+      "regular_end_day": 18,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 21,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 14
+    },
+    {
+      "year": 2007,
+      "regular_start_month":10,
+      "regular_start_day": 3,
+      "regular_end_month": 4,
+      "regular_end_day": 16,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 19,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 17
+    },
+    {
+      "year": 2008,
+      "regular_start_month":10,
+      "regular_start_day": 28,
+      "regular_end_month": 4,
+      "regular_end_day": 16,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 18,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 14
+    },
+    {
+      "year": 2009,
+      "regular_start_month":10,
+      "regular_start_day": 27,
+      "regular_end_month": 4,
+      "regular_end_day": 14,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 17,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 17
+    },
+    {
+      "year": 2010,
+      "regular_start_month":10,
+      "regular_start_day": 26,
+      "regular_end_month": 4,
+      "regular_end_day": 13,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 16,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 12
+    },
+    {
+      "year": 2011,
+      "regular_start_month": 12,
+      "regular_start_day": 25,
+      "regular_end_month": 4,
+      "regular_end_day": 26,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 28,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 21
+    },
+    {
+      "year": 2012,
+      "regular_start_month":10,
+      "regular_start_day": 3,
+      "regular_end_month": 4,
+      "regular_end_day": 17,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 2,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 20
+    },
+    {
+      "year": 2013,
+      "regular_start_month":10,
+      "regular_start_day": 29,
+      "regular_end_month": 4,
+      "regular_end_day": 16,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 19,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 15
+    },
+    {
+      "year": 2014,
+      "regular_start_month":10,
+      "regular_start_day": 28,
+      "regular_end_month": 4,
+      "regular_end_day": 15,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 18,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 16
+    },
+    {
+      "year": 2015,
+      "regular_start_month":10,
+      "regular_start_day": 27,
+      "regular_end_month": 4,
+      "regular_end_day": 13,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 16,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 19
+    },
+    {
+      "year": 2016,
+      "regular_start_month":10,
+      "regular_start_day": 25,
+      "regular_end_month": 4,
+      "regular_end_day": 12,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 21,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 15
+    },
+    {
+      "year": 2017,
+      "regular_start_month":10,
+      "regular_start_day": 17,
+      "regular_end_month": 4,
+      "regular_end_day": 11,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 14,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 8
+    },
+    {
+      "year": 2018,
+      "regular_start_month":10,
+      "regular_start_day": 16,
+      "regular_end_month": 4,
+      "regular_end_day":10,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 13,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 13
+    },
+    {
+      "year": 2019,
+      "regular_start_month":10,
+      "regular_start_day": 22,
+      "regular_end_month": 4,
+      "regular_end_day": 15,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 18,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": "XX"
+    }
+  ]
+}
