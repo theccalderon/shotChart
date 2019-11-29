@@ -4,13 +4,8 @@ shotChart is a Python project for scrapping basketball-reference.com to get the 
 
 ## Installation
 
-1. `git@github.com:theccalderon/shotChart.git`
+1. `git clone git@github.com:theccalderon/shotChart.git`
 2. `pip install -r requirements.txt`
-
-
-```bash
-pip install foobar
-```
 
 ## Usage
 `calendar.json` has the start and end dates for NBA regular season and playoffs starting in 2000. This spider is only crawling the shots for regular season as of now.
