@@ -11,7 +11,7 @@ shotChart is a Python project for scrapping basketball-reference.com to get the 
 `calendar.json` has the start and end dates for NBA regular season and playoffs starting in 2000. This spider is only crawling the shots for regular season as of now.
 
 ```bash
-scrapy crawl basketball-reference -o ./shotChart/data/shots-2000.csv -a season=2000
+scrapy crawl basketball-reference -o ./shotChart/data/shots-2000-wip.csv -a season=2000
 ```
 
 This returns all the shots for NBA season 2000-2001. Inside the `data` dir there is Jupyter notebook (`DivingIn.ipynb`) I used to do some basic feature engineering on the scrapped data.
