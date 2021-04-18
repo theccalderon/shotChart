@@ -213,12 +213,23 @@
       "year": 2019,
       "regular_start_month":10,
       "regular_start_day": 22,
-      "regular_end_month": 4,
-      "regular_end_day": 15,
-      "playoffs_start_month": 4,
-      "playoffs_start_day": 18,
-      "playoffs_end_month": 6,
-      "playoffs_end_day": "XX"
+      "regular_end_month": 8,
+      "regular_end_day": 14,
+      "playoffs_start_month": 8,
+      "playoffs_start_day": 15,
+      "playoffs_end_month": 10,
+      "playoffs_end_day": 11
+    },
+    {
+      "year": 2020,
+      "regular_start_month":12,
+      "regular_start_day": 22,
+      "regular_end_month": 5,
+      "regular_end_day": 16,
+      "playoffs_start_month": 5,
+      "playoffs_start_day": 22,
+      "playoffs_end_month": 7,
+      "playoffs_end_day": 22
     }
   ]
 }
