@@ -230,6 +230,39 @@
       "playoffs_start_day": 22,
       "playoffs_end_month": 7,
       "playoffs_end_day": 22
+    },
+    {
+      "year": 2021,
+      "regular_start_month":10,
+      "regular_start_day": 19,
+      "regular_end_month": 4,
+      "regular_end_day": 10,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 16,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 16
+    },
+    {
+      "year": 2022,
+      "regular_start_month":10,
+      "regular_start_day": 18,
+      "regular_end_month": 4,
+      "regular_end_day": 9,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 15,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 12
+    },
+    {
+      "year": 2023,
+      "regular_start_month":10,
+      "regular_start_day": 24,
+      "regular_end_month": 4,
+      "regular_end_day": 14,
+      "playoffs_start_month": 4,
+      "playoffs_start_day": 16,
+      "playoffs_end_month": 6,
+      "playoffs_end_day": 6
     }
   ]
 }
