@@ -1,6 +1,9 @@
 import scrapy
 import json
 from datetime import date, timedelta
+import datetime
+# import boto3
+from kafka import KafkaProducer
 
 class BBSpider(scrapy.Spider):
     name = "basketball-reference" #identifies the spider, must be unique
@@ -12,10 +15,10 @@ class BBSpider(scrapy.Spider):
 
     def start_requests(self):
         #must return an iterable of Requests which the Spider will begin to crawl from.
+        stream = getattr(self, 'stream', None)
         season = getattr(self, 'season', None)
         print(season)
-        # if season is not None:
-        #     url = url + 'tag/' + tag
+        print(stream)
 
         urls = []
         with open('./calendar.json') as json_file:
@@ -43,9 +46,9 @@ class BBSpider(scrapy.Spider):
                     start_date += delta
 
         for url in urls:
-            yield scrapy.Request(url=url, callback=self.parse_games)
+            yield scrapy.Request(url=url, callback=self.parse_games, cb_kwargs=dict(stream=stream))
 
-    def parse_games(self, response):
+    def parse_games(self, response, stream):
         #will be called to handle the response downloaded for each of the requests made. The response parameter is an instance of TextResponse
         # that holds the page content and has further helpful methods to handle it.
         main_url = response.url
@@ -67,11 +70,11 @@ class BBSpider(scrapy.Spider):
             request = scrapy.Request('https://www.basketball-reference.com/'+next_page,
                                      callback=self.parse_shot_chart,
                                      cb_kwargs=dict(game_id=game_id, winner=winner, loser=loser, year=year,
-                                                    month=month, day=day))
+                                                    month=month, day=day, stream=stream))
             # request.cb_kwargs['foo'] = 'bar'  # add more arguments for the callback
             yield request
 
-    def parse_shot_chart(self, response, game_id, winner, loser, year, month, day):
+    def parse_shot_chart(self, response, game_id, winner, loser, year, month, day, stream):
         for chart in response.css('div.shot-area'):
             # team = str(chart.css('::attr(id)').get()).split('-')[1]
             # print(team)
@@ -83,7 +86,7 @@ class BBSpider(scrapy.Spider):
                 # print(y)
                 shot_description = str(shot.css('::attr(tip)').get())
                 # print(play)
-                yield {
+                data = {
                     'game_id': game_id,
                     'year': year,
                     'month': month,
@@ -94,4 +97,21 @@ class BBSpider(scrapy.Spider):
                     'y': y,
                     'play': shot_description,
                 }
+                print("loading ",json.dumps(data))
+
+                # Kinesis
+                # if stream:
+                #     client = boto3.client('kinesis')
+                #     client.put_record(StreamName="shot_charts", Data=json.dumps(data), PartitionKey="partitionkeydata")
+
+                # Kafka Producer - local Kafka
+                if stream:
+                    producer = KafkaProducer(
+                        bootstrap_servers=['127.0.0.1:9094']
+                    )
+                    print(f'Producing message @ {datetime.now()} | Message = {str(json.dumps(data))}')
+                    producer.send('shot_charts', json.dumps(data))
+
+                yield data
+                
 
