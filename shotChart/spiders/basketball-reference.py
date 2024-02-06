@@ -18,7 +18,7 @@ class BBSpider(scrapy.Spider):
         
         season = getattr(self, 'season', None)
         topic = getattr(self, 'topic', None)
-        kafka_listener = getattr(kafka_listener, 'topic', None)
+        kafka_listener = getattr(self, 'kafka_listener', None)
 
         urls = []
         with open('./calendar.json') as json_file:
