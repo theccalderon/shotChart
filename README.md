@@ -14,6 +14,11 @@ shotChart is a Python project for scrapping basketball-reference.com to get the 
 scrapy crawl basketball-reference -o ./shotChart/data/shots-2000-wip.csv -a season=2000
 ```
 
+Stream to kafka topic:
+```bash
+scrapy crawl basketball-reference -o ./shotChart/data/shots-2000-wip.csv -a season=2000 -topic "shot_charts" -kafka_listener "127.0.0.1:9094"
+```
+
 This returns all the shots for NBA season 2000-2001. Inside the `data` dir there is Jupyter notebook (`DivingIn.ipynb`) I used to do some basic feature engineering on the scrapped data.
 
 You can also use `execute_scrapper.sh` to get all the seasons starting in 2000 to the present.

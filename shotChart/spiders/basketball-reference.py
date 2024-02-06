@@ -15,16 +15,16 @@ class BBSpider(scrapy.Spider):
 
     def start_requests(self):
         #must return an iterable of Requests which the Spider will begin to crawl from.
-        stream = getattr(self, 'stream', None)
+        
         season = getattr(self, 'season', None)
-        print(season)
-        print(stream)
+        topic = getattr(self, 'topic', None)
+        kafka_listener = getattr(self, 'kafka_listener', None)
 
         urls = []
         with open('./calendar.json') as json_file:
             data = json.load(json_file)
             for p in data['seasons']:
-                print(p)
+                # print(p)
                 if str(p['year']) != str(season):
                     continue
                 start_month = p['regular_start_month']
@@ -46,9 +46,9 @@ class BBSpider(scrapy.Spider):
                     start_date += delta
 
         for url in urls:
-            yield scrapy.Request(url=url, callback=self.parse_games, cb_kwargs=dict(stream=stream))
+            yield scrapy.Request(url=url, callback=self.parse_games, cb_kwargs=dict(topic=topic,kafka_listener=kafka_listener))
 
-    def parse_games(self, response, stream):
+    def parse_games(self, response, topic, kafka_listener):
         #will be called to handle the response downloaded for each of the requests made. The response parameter is an instance of TextResponse
         # that holds the page content and has further helpful methods to handle it.
         main_url = response.url
@@ -70,11 +70,11 @@ class BBSpider(scrapy.Spider):
             request = scrapy.Request('https://www.basketball-reference.com/'+next_page,
                                      callback=self.parse_shot_chart,
                                      cb_kwargs=dict(game_id=game_id, winner=winner, loser=loser, year=year,
-                                                    month=month, day=day, stream=stream))
+                                                    month=month, day=day, topic=topic, kafka_listener=kafka_listener))
             # request.cb_kwargs['foo'] = 'bar'  # add more arguments for the callback
             yield request
 
-    def parse_shot_chart(self, response, game_id, winner, loser, year, month, day, stream):
+    def parse_shot_chart(self, response, game_id, winner, loser, year, month, day, topic, kafka_listener):
         for chart in response.css('div.shot-area'):
             # team = str(chart.css('::attr(id)').get()).split('-')[1]
             # print(team)
@@ -105,12 +105,12 @@ class BBSpider(scrapy.Spider):
                 #     client.put_record(StreamName="shot_charts", Data=json.dumps(data), PartitionKey="partitionkeydata")
 
                 # Kafka Producer - local Kafka
-                if stream:
+                if topic and kafka_listener:
                     producer = KafkaProducer(
-                        bootstrap_servers=['127.0.0.1:9094']
+                        bootstrap_servers=[kafka_listener]
                     )
                     print(f'Producing message @ {datetime.now()} | Message = {str(json.dumps(data))}')
-                    producer.send('shot_charts', json.dumps(data))
+                    producer.send(topic, json.dumps(data))
 
                 yield data
                 
