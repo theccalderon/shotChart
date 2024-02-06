@@ -125,3 +125,5 @@ dmypy.json
 .pyre/
 
 *.csv
+shotChart/.DS_Store
+shotChart/data/.DS_Store
