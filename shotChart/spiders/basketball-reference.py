@@ -109,8 +109,8 @@ class BBSpider(scrapy.Spider):
                     producer = KafkaProducer(
                         bootstrap_servers=[kafka_listener]
                     )
-                    print(f'Producing message @ {datetime.now()} | Message = {str(json.dumps(data))}')
-                    producer.send(topic, json.dumps(data))
+                    print(f'Producing message @ {datetime.datetime.now()} | Message = {str(json.dumps(data))}')
+                    producer.send(topic, json.dumps(data).encode("utf-8"))
 
                 yield data
                 
