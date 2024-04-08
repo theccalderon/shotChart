@@ -66,8 +66,11 @@ class BBSpider(scrapy.Spider):
             try:
                 admin = KafkaAdminClient(bootstrap_servers=[kafka_listener])
                 list_of_topics = admin.list_topics()
+                logger.info("List of topics: {}".format(list_of_topics))
                 my_topic = [topic for topic in list_of_topics if topic == "shot_charts"]
-                if my_topic is None:
+                logger.info("Does shot_charts exist?: {}".format(my_topic))
+                if not my_topic:
+                    logger.info("Creating a new topic")
                     topic = NewTopic(name='shot_charts',
                                 num_partitions=1,
                                 replication_factor=1)
@@ -75,6 +78,7 @@ class BBSpider(scrapy.Spider):
             except Exception as e:
                 print(f"Error creating kafka topic. Error: {e}")
                 return
+        logger.info("Starting the scraper")
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse_games, cb_kwargs=dict(topic=topic,kafka_listener=kafka_listener))
 
