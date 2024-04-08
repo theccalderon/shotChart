@@ -3,48 +3,78 @@ import json
 from datetime import date, timedelta
 import datetime
 # import boto3
-from kafka import KafkaProducer
+from kafka import KafkaProducer, KafkaAdminClient
+from kafka.admin import NewTopic
+import logging
 
 class BBSpider(scrapy.Spider):
     name = "basketball-reference" #identifies the spider, must be unique
 
-    #shortcut for start_requests
-    # start_urls = [
-    #     'https://www.basketball-reference.com/boxscores/?',
-    # ]
-
     def start_requests(self):
+        logging.basicConfig(level=logging.INFO,format='%(asctime)s:%(funcName)s:%(levelname)s:%(message)s')
+        logger = logging.getLogger("basketball-reference-scraper")
         #must return an iterable of Requests which the Spider will begin to crawl from.
-        
         season = getattr(self, 'season', None)
+        logger.info("Season is {}".format(season))
         topic = getattr(self, 'topic', None)
+        logger.info("Topic is {}".format(topic))
         kafka_listener = getattr(self, 'kafka_listener', None)
+        logger.info("Kafka listener is {}".format(kafka_listener))
+        start_date = getattr(self, 'start_date', None)
+        logger.info("Start date is {}".format(start_date))
+        end_date = getattr(self, 'end_date', None)
+        logger.info("End date is {}".format(end_date))
+        #if you pass both season and (start_date and end_date), it will ignore the season argument. 
 
         urls = []
         with open('./calendar.json') as json_file:
             data = json.load(json_file)
             for p in data['seasons']:
-                # print(p)
                 if str(p['year']) != str(season):
                     continue
-                start_month = p['regular_start_month']
-                start_day = p['regular_start_day']
-                start_year = p['year']
-                end_month = p['regular_end_month']
-                end_day = p['regular_end_day']
-                end_year = p['year'] + 1
-                start_date = date(start_year, start_month, start_day)
-                end_date = date(end_year, end_month, end_day)
+                calendar_start_month = p['regular_start_month']
+                calendar_start_day = p['regular_start_day']
+                calendar_start_year = p['year']
+                calendar_end_month = p['regular_end_month']
+                calendar_end_day = p['regular_end_day']
+                calendar_end_year = p['year'] + 1
+                # if no start_date or end_date were passed, we read from calendar
+                if not start_date:
+                    start_date = date(calendar_start_year, calendar_start_month, calendar_start_day)
+                else:
+                    year = str(start_date).split('-')[0]
+                    month = str(start_date).split('-')[1]
+                    day = str(start_date).split('-')[2]
+                    start_date = date(int(year), int(month), int(day))
+                if not end_date:    
+                    end_date = date(calendar_end_year, calendar_end_month, calendar_end_day)
+                else:
+                    year = str(end_date).split('-')[0]
+                    month = str(end_date).split('-')[1]
+                    day = str(end_date).split('-')[2]
+                    end_date = date(int(year), int(month), int(day))
                 delta = timedelta(days=1)
                 while start_date <= end_date:
-                    # print(start_date)
                     year = str(start_date).split('-')[0]
                     month = str(start_date).split('-')[1]
                     day = str(start_date).split('-')[2]
                     urls.append('https://www.basketball-reference.com/boxscores/?' + 'month=' + month + '&day=' + day +
                                 '&year=' + year)
                     start_date += delta
-
+        # create kafka topic always with the same name if it doesn't exist.
+        if kafka_listener:
+            try:
+                admin = KafkaAdminClient(bootstrap_servers=[kafka_listener])
+                list_of_topics = admin.list_topics()
+                my_topic = [topic for topic in list_of_topics if topic == "shot_charts"]
+                if my_topic is None:
+                    topic = NewTopic(name='shot_charts',
+                                num_partitions=1,
+                                replication_factor=1)
+                    admin.create_topics([topic])
+            except Exception as e:
+                print(f"Error creating kafka topic. Error: {e}")
+                return
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse_games, cb_kwargs=dict(topic=topic,kafka_listener=kafka_listener))
 
