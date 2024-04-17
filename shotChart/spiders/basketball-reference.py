@@ -13,6 +13,7 @@ class BBSpider(scrapy.Spider):
     def start_requests(self):
         logging.basicConfig(level=logging.INFO,format='%(asctime)s:%(funcName)s:%(levelname)s:%(message)s')
         logger = logging.getLogger("basketball-reference-scraper")
+        logger.setLevel("INFO")
         #must return an iterable of Requests which the Spider will begin to crawl from.
         season = getattr(self, 'season', None)
         logger.info("Season is {}".format(season))
@@ -62,24 +63,25 @@ class BBSpider(scrapy.Spider):
                                 '&year=' + year)
                     start_date += delta
         # create kafka topic always with the same name if it doesn't exist.
-        if kafka_listener:
-            try:
-                admin = KafkaAdminClient(bootstrap_servers=[kafka_listener])
-                list_of_topics = admin.list_topics()
-                logger.info("List of topics: {}".format(list_of_topics))
-                my_topic = [topic for topic in list_of_topics if topic == "shot_charts"]
-                logger.info("Does shot_charts exist?: {}".format(my_topic))
-                if not my_topic:
-                    logger.info("Creating a new topic")
-                    topic = NewTopic(name='shot_charts',
-                                num_partitions=1,
-                                replication_factor=1)
-                    admin.create_topics([topic])
-            except Exception as e:
-                print(f"Error creating kafka topic. Error: {e}")
-                return
+        # if kafka_listener:
+        #     try:
+        #         admin = KafkaAdminClient(bootstrap_servers=[kafka_listener])
+        #         list_of_topics = admin.list_topics()
+        #         logger.info("List of topics: {}".format(list_of_topics))
+        #         my_topic = [topic for topic in list_of_topics if topic == "shot_charts"]
+        #         logger.info("Does shot_charts exist?: {}".format(my_topic))
+        #         if not my_topic:
+        #             logger.info("Creating a new topic")
+        #             topic = NewTopic(name='shot_charts',
+        #                         num_partitions=1,
+        #                         replication_factor=1)
+        #             admin.create_topics([topic])
+        #     except Exception as e:
+        #         print(f"Error creating kafka topic. Error: {e}")
+        #         return
         logger.info("Starting the scraper")
         for url in urls:
+            logger.info("Sending request for URL: {}".format(url))
             yield scrapy.Request(url=url, callback=self.parse_games, cb_kwargs=dict(topic=topic,kafka_listener=kafka_listener))
 
     def parse_games(self, response, topic, kafka_listener):
@@ -131,7 +133,8 @@ class BBSpider(scrapy.Spider):
                     'y': y,
                     'play': shot_description,
                 }
-                print("loading ",json.dumps(data))
+                logger = logging.getLogger("basketball-reference-scraper")
+                logger.info("Loading {}".format(json.dumps(data)))
 
                 # Kinesis
                 # if stream:
@@ -143,7 +146,7 @@ class BBSpider(scrapy.Spider):
                     producer = KafkaProducer(
                         bootstrap_servers=[kafka_listener]
                     )
-                    print(f'Producing message @ {datetime.datetime.now()} | Message = {str(json.dumps(data))}')
+                    logger.info(f'Producing message @ {datetime.datetime.now()} | Message = {str(json.dumps(data))}')
                     producer.send(topic, json.dumps(data).encode("utf-8"))
 
                 yield data
