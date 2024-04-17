@@ -16,7 +16,12 @@ scrapy crawl basketball-reference -o ./shotChart/data/shots-2000-wip.csv -a seas
 
 Stream to kafka topic:
 ```bash
-scrapy crawl basketball-reference -o ./shotChart/data/shots-2000-wip.csv -a season=2000 -topic "shot_charts" -kafka_listener "127.0.0.1:9094"
+scrapy crawl basketball-reference -o ./shotChart/data/shots-2000-wip.csv -a season=2000 -a topic="shot_charts" -a kafka_listener="127.0.0.1:9094"
+```
+
+Stream to kafka topic and set the start date and end date (for subsequent runs):
+```bash
+scrapy crawl basketball-reference -o ./shotChart/data/shots-2000-wip.csv -a season=2000 -a topic="shot_charts" -a kafka_listener="127.0.0.1:9094" -a start_date="2000-10-02" -a end_date="2000-10-03"
 ```
 
 This returns all the shots for NBA season 2000-2001. Inside the `data` dir there is Jupyter notebook (`DivingIn.ipynb`) I used to do some basic feature engineering on the scrapped data.
