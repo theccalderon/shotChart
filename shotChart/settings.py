@@ -16,7 +16,7 @@ NEWSPIDER_MODULE = 'shotChart.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'shotChart (+http://www.yourdomain.com)'
+USER_AGENT = 'shotChart'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
