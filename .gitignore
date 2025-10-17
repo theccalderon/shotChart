@@ -131,3 +131,4 @@ shotChart/data/*.tgz
 shotChart/data/*.csv
 diff
 .vscode/settings.json
+.DS_Store
