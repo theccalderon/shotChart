@@ -37,6 +37,6 @@ six==1.16.0
 tldextract==5.1.1
 Twisted==24.7.0rc1
 typing_extensions==4.9.0
-urllib3==2.6.0
+urllib3==2.6.3
 w3lib==2.1.2
 zope.interface==6.1
