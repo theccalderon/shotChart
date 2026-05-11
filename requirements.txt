@@ -17,7 +17,7 @@ itemadapter==0.8.0
 itemloaders==1.1.0
 jmespath==1.0.1
 kafka-python==2.0.2
-lxml==5.1.0
+lxml==6.1.0
 packaging==23.2
 parsel==1.8.1
 Protego==0.3.0
